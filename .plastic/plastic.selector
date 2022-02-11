@@ -1,0 +1,4 @@
+repository "WhereAreTheMines@S7_Software@cloud"
+  path "/"
+    br "/main"
+    co "/main"
