@@ -5,23 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class SahneGecis : MonoBehaviour
 {
-    Ses ses;
+    
     public GameObject canvasUyariKutusu;
-
-     void Start()
-    {
-        ses = FindObjectOfType<Ses>();
-    }
+    float delay = 0.15f;
+   
     public void AnsSayfayaGit()
     {
-        ses.PlayClickCikis();
-        SceneManager.LoadScene("Ana Menu");
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
+        StartCoroutine(SahneDegistir(delay, "Ana Menu"));
     }
-    
+
     public void OyunaBasla()
     {
-        ses.PlayClickGiris();
-        SceneManager.LoadScene("Oyun");
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
+        StartCoroutine(SahneDegistir(delay, "Oyun"));
+
     }
     public void Oyna()
     {
@@ -30,21 +28,27 @@ public class SahneGecis : MonoBehaviour
 
     public void AyarlaraGit()
     {
-        ses.PlayClickGiris();
-        SceneManager.LoadScene("Ayarar");
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
+        StartCoroutine(SahneDegistir(delay, "Ayarar"));
+
     }
     public void NasilOynaniraGit()
     {
-        ses.PlayClickGiris();
-        SceneManager.LoadScene("Nasil Oynanir");
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
+        StartCoroutine(SahneDegistir(delay, "Nasil Oynanir"));
+       
     }
     public void OyundanCik()
     {
-        ses.PlayClickCikis();
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
         Application.Quit();
     }
 
 
-
+    IEnumerator SahneDegistir(float delay, string sahne)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sahne);
+    }
 
 }
