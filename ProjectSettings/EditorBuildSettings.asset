@@ -6,18 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Intro.unity
+    path: Assets/_SCENES/Intro.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/Ana Menu.unity
+    path: Assets/_SCENES/Ana Menu.unity
     guid: f3ec9ab7a67bc3249845a6129c8066b6
   - enabled: 1
-    path: Assets/Scenes/Nasil Oynanir.unity
+    path: Assets/_SCENES/Nasil Oynanir.unity
     guid: e2fe9a828ff49fc4687b0a12b5de0ff3
   - enabled: 1
-    path: Assets/Scenes/Oyun.unity
+    path: Assets/_SCENES/Oyun.unity
     guid: b5d6827abe23b0a48aea2b795c2a3d8f
   - enabled: 1
-    path: Assets/Scenes/Ayarar.unity
+    path: Assets/_SCENES/Ayarar.unity
     guid: a7193e88cafa7374bbf5dc60638cbf15
   m_configObjects: {}

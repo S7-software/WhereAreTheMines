@@ -27,6 +27,10 @@ public class OyunKontrol : MonoBehaviour
 
     private void Awake()
     {
+        
+        double a = System.Convert.ToDouble(Screen.height) / System.Convert.ToDouble(Screen.width);
+        if (1.5f > a) Camera.main.transform.position = new Vector3(0, -0.39f, -10);
+        else Camera.main.transform.position = new Vector3(0, 0, -10);
 
         Esite();
         Tanimlamalar();
