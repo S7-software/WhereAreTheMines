@@ -7,7 +7,6 @@ public class DilAyarlaAyarlar : MonoBehaviour
 {
 
     public Text txtHeader, txtSes, txtDil, txtRekorlariSifirla, txtBtnSifirla, txtBtnHakkimizda, txtBtnAnaMenu, txtHeader2;
-    // Start is called before the first frame update
     void Start()
     {
         txtHeader.text = KAYIT.GetDilAyarlarHeader();

@@ -10,13 +10,18 @@ public class Ayarlar : MonoBehaviour
     public Button btnDemo;
     public Button[] btnDiller;
     public Slider mySlider;
-
+    GameObject go;
     bool ilkAcilis = true;
-    public Ses ses;
+    private void Awake()
+    {
+      double a=Convert.ToDouble(Screen.height)/ Convert.ToDouble(Screen.width) ;
+        if (1.5f > a) gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        else gameObject.transform.localScale = Vector3.one;
+    }
     private void Start()
     {
-        
-        
+
+
         Tanimlanacaklar();
     }
 
@@ -24,31 +29,33 @@ public class Ayarlar : MonoBehaviour
     {
         float xcSes = KAYIT.GetSes();
         KAYIT.SetSes(mySlider.value);
-        ses.GetComponent<AudioSource>().volume = KAYIT.GetSes();
+        SoundBox.instance.SetVolume(KAYIT.GetSes());
         if (ilkAcilis)
         {
             ilkAcilis = false;
             return;
         }
-        if (xcSes>KAYIT.GetSes())
+        if (xcSes > KAYIT.GetSes())
         {
-            if(!ses.GetComponent<AudioSource>().isPlaying)
-            ses.PlayClickCikis();
+            SoundBox.instance.PlayIfDontPlay(NamesOfSound.clickCikis);
+            //if(!ses.GetComponent<AudioSource>().isPlaying)
+            //ses.PlayClickCikis();
         }
-        else 
+        else
         {
-            if (!ses.GetComponent<AudioSource>().isPlaying)
-                ses.PlayClickGiris();
+            SoundBox.instance.PlayIfDontPlay(NamesOfSound.clickGiris);
+            //if (!ses.GetComponent<AudioSource>().isPlaying)
+            //    ses.PlayClickGiris();
         }
     }
-    
+
     private void Tanimlanacaklar()
     {
-        
+
         mySlider.value = KAYIT.GetSes();
 
         DilButtonlaririninRekleriniAyarla(KAYIT.GetSistemDili());
-        
+
     }
 
     public void DiliAyarla(string hangiDil)
@@ -57,43 +64,37 @@ public class Ayarlar : MonoBehaviour
         switch (hangiDil)
         {
             case "tr":
-                
+
                 KAYIT.SetDil("tr");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
             case "jp":
-                
+
                 KAYIT.SetDil("jp");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
             case "fr":
-                
+
                 KAYIT.SetDil("fr");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
             case "es":
-                
+
                 KAYIT.SetDil("es");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
             case "ru":
-                
+
                 KAYIT.SetDil("ru");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
             case "de":
-                
+
                 KAYIT.SetDil("de");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
             default:
-                
+
                 KAYIT.SetDil("en");
-                ses.PlayClickGiris();
-                break;
+                SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris); break;
         }
 
-        SceneManager.LoadScene("Ayarar");
+
+        StartCoroutine(SahneDegistir(0.2f, "Ayarar"));
     }
 
 
@@ -109,7 +110,7 @@ public class Ayarlar : MonoBehaviour
             case "fr": xcDil = "BtnFransizca"; break;
             case "ru": xcDil = "BtnRusca"; break;
             case "jp": xcDil = "BtnJaponca"; break;
-           
+
 
             default:
                 xcDil = "BtnEnglish";
@@ -117,7 +118,7 @@ public class Ayarlar : MonoBehaviour
         }
         foreach (Button btnDil in btnDiller)
         {
-           
+
             btnDil.interactable = true;
 
             if (btnDil.name == xcDil)
@@ -128,13 +129,17 @@ public class Ayarlar : MonoBehaviour
         }
     }
 
-
+    IEnumerator SahneDegistir(float delay, string sahne)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(sahne);
+    }
     public void ButunKayitleriSil()
     {
-        ses.PlayClickCikis();
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
         KAYIT.ButuKayitlariSil();
-        SceneManager.LoadScene("Intro");
+        StartCoroutine(SahneDegistir(0.5f, "Intro"));
     }
 
-    
+
 }
