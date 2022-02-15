@@ -16,8 +16,8 @@ public class Blok : MonoBehaviour
     [Header("Tanimlanacaklar")]
     public SpriteRenderer img;
     public Sprite[] sptKutular; //0. kutu, 1-8 sayı, 9 boş kutu , 10-11 bayraklar, 12 mayın
-    CircleCollider2D myCollider2D;
-    int yanimdaKacMayinVar = 0;
+ public  CircleCollider2D myCollider2D;
+   public int yanimdaKacMayinVar = 0;
     OyunKontrol oyunKontrol;
     bool tiklandi = false;
     bool oyunBasladi = false;
@@ -88,7 +88,7 @@ public class Blok : MonoBehaviour
     {
         img.sprite = sptKutular[12];
         img.color = new Color32(255, 0, 0, 255);
-        oyunKontrol.btnBayrak.interactable = false;
+        oyunKontrol._btnBayrak.interactable = false;
         oyunKontrol.StopAllCoroutines();
 
 
@@ -135,11 +135,17 @@ public class Blok : MonoBehaviour
 
     private void OnMouseUp()
     {
-        
+        if (oyunKontrol.isPause) return;
+        AlanKontrol();
+
+    }
+
+    public void AlanKontrol()
+    {
         if (!oyunBasladi) { return; }
         if (!oyunKontrol.GetBayrakIsAktif())
         {
-            
+
             oyunKontrol.ArttirHamleSayisi();
             if (img.sprite.name == "OynFlag")
             {
@@ -160,9 +166,9 @@ public class Blok : MonoBehaviour
         else
         {
             oyunKontrol.ArttirHamleSayisi();
-            if (img.sprite.name== "OynFlag")
+            if (img.sprite.name == "OynFlag")
             {
-                
+
                 img.sprite = sptKutular[0];
                 oyunKontrol.BayrakKaldir();
                 if (dogruBayrakVar)
@@ -173,7 +179,7 @@ public class Blok : MonoBehaviour
 
                 oyunKontrol.GuncelleUITxtBayrakSayisi();
             }
-            else if (oyunKontrol.GetBayrakSayisi()>0)
+            else if (oyunKontrol.GetBayrakSayisi() > 0)
             {
                 img.sprite = sptKutular[10];
                 if (isMayin)
@@ -189,11 +195,8 @@ public class Blok : MonoBehaviour
                 return;
             }
         }
-        
-
-
-
     }
+
     private void OnMouseDown()
     {
         if(!oyunKontrol.GetBayrakIsAktif())

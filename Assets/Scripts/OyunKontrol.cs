@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -15,17 +16,18 @@ public class OyunKontrol : MonoBehaviour
     private int _rekorSure;
     public bool oyunBasladi = false;
     public GameObject panelSonuc;
-    public Button btnTekrar, btnBayrak,_btnAnaMenu,_btnSonraki,_btnAlanTara;
+    public Button _btnTekrar, _btnBayrak, _btnAnaMenu, _btnSonraki, _btnAlanTara, _btnPause, _btnDevam;
     public GameObject panel, btnBasla;
     public Text txtSure;
     public Text txtMayin, txtBayrak, txtRekor;
-    public GameObject arkaPlanGolge;
+    public GameObject arkaPlanGolge, _canvasDuraklatildi;
     Ses ses;
     int sure = 0;
     bool bayrakAktif = false;
     Blok[] bloklar;
-
+    public bool isPause = true;
     int _bolum;
+    int _countOfArama = 3;
     private void Awake()
     {
 
@@ -46,7 +48,22 @@ public class OyunKontrol : MonoBehaviour
         MayinAta();
 
     }
+    private void Start()
+    {
+        SayfaPause(true);
+    }
 
+
+    void SayfaPause(bool acik)
+    {
+        
+        _btnAnaMenu.gameObject.SetActive(acik);
+        _btnTekrar.gameObject.SetActive(acik);
+        _btnSonraki.gameObject.SetActive(acik);
+        _btnAlanTara.gameObject.SetActive(!acik);
+        _btnPause.gameObject.SetActive(!acik);
+        _btnBayrak.gameObject.SetActive(!acik);
+    }
     private void Tanimlamalar()
     {
         bloklar = FindObjectsOfType<Blok>();
@@ -57,7 +74,33 @@ public class OyunKontrol : MonoBehaviour
         txtSure.text = "00:00";
         panel.SetActive(true);
         ses = FindObjectOfType<Ses>();
+        _btnSonraki.interactable = false;
+        _btnAlanTara.onClick.AddListener(() => BulBosKutu());
+        _btnPause.onClick.AddListener(() => HandlePause());
+        _btnSonraki.onClick.AddListener(() => StartCoroutine(HandleSonraki()));
+        _btnDevam.onClick.AddListener(() => HandleDevam());
 
+    }
+
+    private void HandleDevam()
+    {
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickArama);
+        SayfaPause(false);
+        _canvasDuraklatildi.SetActive(false);
+    }
+
+    IEnumerator HandleSonraki()
+    {
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
+        yield return new WaitForSeconds(0.2f);
+        KAYIT.SetMayinSayisi(_mayinSayisi + 1);
+        SceneManager.LoadScene("Oyun");
+    }
+
+    private void HandlePause()
+    {
+        _canvasDuraklatildi.SetActive(true);
+        SayfaPause(true);
     }
 
     private void Esite()
@@ -111,6 +154,47 @@ public class OyunKontrol : MonoBehaviour
 
     }
 
+
+    void BulBosKutu()
+    {
+        Blok[] bloklar = FindObjectsOfType<Blok>();
+        bool yapildi = false;
+
+        int random = Random.Range(0, bloklar.Length);
+
+        int bulunacak = 0;
+        while (!yapildi && bulunacak<9)
+        {
+
+            for (int i = random; i < bloklar.Length; i++)
+            {
+                if (bloklar[i].yanimdaKacMayinVar == bulunacak && !bloklar[i].isMayin && bloklar[i].myCollider2D.enabled)
+                {
+
+                    bloklar[i].AlanKontrol();
+                    yapildi = true;
+                    break;
+                }
+            }
+            if (!yapildi)
+            {
+                for (int i = random-1; i >= 0; i--)
+                {
+                    if (bloklar[i].yanimdaKacMayinVar == bulunacak && !bloklar[i].isMayin && bloklar[i].myCollider2D.enabled)
+                    {
+                        bloklar[i].AlanKontrol();
+                        yapildi = true;
+                        break;
+                    }
+                }
+            }
+            bulunacak++;
+        }
+
+        _countOfArama--;
+
+
+    }
     private void SureyiYaz(int sure)
     {
         string cahsTxtSure = "";
@@ -193,13 +277,15 @@ public class OyunKontrol : MonoBehaviour
 
     public void BaslaButton()
     {
+        isPause = false;
         panel.SetActive(false);
-        btnBayrak.interactable = true;
-        btnTekrar.interactable = true;
+        _btnBayrak.interactable = true;
+        _btnTekrar.interactable = true;
         oyunBasladi = true;
         btnBasla.SetActive(false);
         arkaPlanGolge.SetActive(true);
         FindObjectOfType<Surat>().SuratDegistir(0);
+        SayfaPause(false);
         StartCoroutine(SureyiCalistir());
         Blok[] bloklar = FindObjectsOfType<Blok>();
         foreach (Blok blok in bloklar)
@@ -213,7 +299,7 @@ public class OyunKontrol : MonoBehaviour
 
     public void SetBayrakAktif()
     {
-        ColorBlock newColorBlock = btnBayrak.colors;
+        ColorBlock newColorBlock = _btnBayrak.colors;
         Color32[] newColor = { new Color32(255, 255, 0, 255), new Color32(255, 255, 255, 255) };
         if (!bayrakAktif)
         {
@@ -223,7 +309,7 @@ public class OyunKontrol : MonoBehaviour
             newColorBlock.normalColor = newColor[0];
             newColorBlock.pressedColor = newColor[0];
             newColorBlock.selectedColor = newColor[0];
-            btnBayrak.colors = newColorBlock;
+            _btnBayrak.colors = newColorBlock;
             ses.PlayClickGiris();
         }
         else
@@ -232,7 +318,7 @@ public class OyunKontrol : MonoBehaviour
             newColorBlock.normalColor = newColor[1];
             newColorBlock.pressedColor = newColor[1];
             newColorBlock.selectedColor = newColor[1];
-            btnBayrak.colors = newColorBlock;
+            _btnBayrak.colors = newColorBlock;
             ses.PlayClickCikis();
         }
 
@@ -282,11 +368,14 @@ public class OyunKontrol : MonoBehaviour
     public void Kazandin()
     {
         ses.PlayKazanma();
+        SayfaPause(true);
+        _btnSonraki.interactable = true;
+
         StopAllCoroutines();
-        int yildizSayisi = 2;
+        int yildizSayisi = _countOfArama<2?1:_countOfArama;
         KAYIT.SetRekorYildiz(_bolum, yildizSayisi);
-        KAYIT.SetSonAcikBolumArti(_bolum+1);
-       
+        KAYIT.SetSonAcikBolumArti(_bolum + 1);
+
 
         Blok[] bloklar = FindObjectsOfType<Blok>();
         foreach (Blok blok in bloklar)
@@ -313,7 +402,7 @@ public class OyunKontrol : MonoBehaviour
         {
             sonuc.SetTxtMesaj(KAYIT.GetDilTexttOyunOyunSonuKazandinNormal());
         }
-        btnBayrak.interactable = false;
+        _btnBayrak.interactable = false;
 
     }
 
@@ -325,6 +414,8 @@ public class OyunKontrol : MonoBehaviour
     public void Kaybettin()
     {
         ses.PlayPatlama();
+        SayfaPause(true);
+        _btnSonraki.interactable = false;
         StartCoroutine(KacSayiBeklesin(0.7f));
 
 

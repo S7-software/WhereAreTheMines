@@ -52,6 +52,7 @@ public class ButtonLevel : MonoBehaviour
    IEnumerator HandleBolumeGit(int bolum)
     {
         KAYIT.SetMayinSayisi(bolum + 9);
+        FindObjectOfType<CanvaBolumSec>().SetSayfaKonum();
         SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
         yield return new WaitForSeconds(0.2f);
         SceneManager.LoadScene("Oyun"); ;

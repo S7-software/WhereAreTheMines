@@ -487,4 +487,7 @@ public class KAYIT : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
+
+    public static void SetSayfaKonum(float transformY) { PlayerPrefs.SetFloat("konumsayfa", transformY); }
+    public static float GetSayfaKonum() { return PlayerPrefs.GetFloat("konumsayfa", -4800); }
 }
