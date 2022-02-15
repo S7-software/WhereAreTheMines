@@ -25,12 +25,19 @@ public class OyunKontrol : MonoBehaviour
     bool bayrakAktif = false;
     Blok[] bloklar;
 
+    int _bolum;
     private void Awake()
     {
-        
+
         double a = System.Convert.ToDouble(Screen.height) / System.Convert.ToDouble(Screen.width);
-        if (1.5f > a) Camera.main.transform.position = new Vector3(0, -0.39f, -10);
-        else Camera.main.transform.position = new Vector3(0, 0, -10);
+        if (1.5f > a)
+        {
+            Camera.main.transform.position = new Vector3(0, -0.39f, -10);
+        }
+        else
+        {
+            Camera.main.transform.position = new Vector3(0, 0, -10);
+        }
 
         Esite();
         Tanimlamalar();
@@ -44,25 +51,26 @@ public class OyunKontrol : MonoBehaviour
     {
         bloklar = FindObjectsOfType<Blok>();
         _bayrakSayisi = _mayinSayisi;
+        _bolum = _mayinSayisi - 9;
         txtBayrak.text = _bayrakSayisi.ToString();
         txtMayin.text = _mayinSayisi.ToString();
         txtSure.text = "00:00";
         panel.SetActive(true);
         ses = FindObjectOfType<Ses>();
-        
+
     }
 
     private void Esite()
     {
         _mayinSayisi = KAYIT.GetMayinSayisi();
-        if (KAYIT.GetRekorSure(_mayinSayisi) != 10000)
+        if (KAYIT.GetRekorSure(_bolum) != 10000)
         {
-            int updtSure = KAYIT.GetRekorSure(_mayinSayisi);
+            int updtSure = KAYIT.GetRekorSure(_bolum);
             txtRekor.text = KAYIT.GetDilTexttOyunRekor() + KAYIT.SureyiYaz(updtSure);
         }
         else
         {
-            txtRekor.text = KAYIT.GetDilTexttOyunRekor()+" --:--";
+            txtRekor.text = KAYIT.GetDilTexttOyunRekor() + " --:--";
         }
 
     }
@@ -275,6 +283,9 @@ public class OyunKontrol : MonoBehaviour
     {
         ses.PlayKazanma();
         StopAllCoroutines();
+        KAYIT.SetRekorYildiz(_bolum, 2);
+        KAYIT.SetSonAcikBolumArti(_bolum+1);
+       
 
         Blok[] bloklar = FindObjectsOfType<Blok>();
         foreach (Blok blok in bloklar)
@@ -291,10 +302,10 @@ public class OyunKontrol : MonoBehaviour
 
 
 
-        if (sure < KAYIT.GetRekorSure(_mayinSayisi))
+        if (sure < KAYIT.GetRekorSure(_bolum))
         {
             sonuc.SetTxtMesaj(KAYIT.GetDilTexttOyunOyunSonuKazandinRekor());
-            KAYIT.SetRekor(_mayinSayisi, sure);
+            KAYIT.SetRekor(_bolum, sure);
         }
         else
         {
@@ -313,7 +324,7 @@ public class OyunKontrol : MonoBehaviour
     {
         ses.PlayPatlama();
         StartCoroutine(KacSayiBeklesin(0.7f));
-        
+
 
     }
     IEnumerator KacSayiBeklesin(float sure)

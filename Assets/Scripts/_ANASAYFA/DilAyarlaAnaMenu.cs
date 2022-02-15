@@ -7,8 +7,8 @@ using UnityEngine.UI;
 public class DilAyarlaAnaMenu : MonoBehaviour
 {
 
-    public Text txtBtnOyna, txtBtnAyarlar, txtBtnCikis, txtMayinSayisi, txtBtnBasla, txtBtnIptal;
-    // Start is called before the first frame update
+    public Text txtBtnOyna, txtBtnAyarlar, txtBtnCikis;
+    // public Text txtMayinSayisi, txtBtnBasla, txtBtnIptal;
     void Start()
     {
         DilleriAyarla();
@@ -20,9 +20,9 @@ public class DilAyarlaAnaMenu : MonoBehaviour
         txtBtnAyarlar.text = KAYIT.GetDilButtonAnaMenuAyarlar();
         txtBtnCikis.text = KAYIT.GetDilButtonAnaMenuCikis();
 
-        txtMayinSayisi.text = KAYIT.GetDilTextUyariKutusuMayinSayisi();
-        txtBtnBasla.text = KAYIT.GetDilButtonUyariKutusuBasla();
-        txtBtnIptal.text = KAYIT.GetDilButtonUyariKutusuIptal();
+        //txtMayinSayisi.text = KAYIT.GetDilTextUyariKutusuMayinSayisi();
+        //txtBtnBasla.text = KAYIT.GetDilButtonUyariKutusuBasla();
+        //txtBtnIptal.text = KAYIT.GetDilButtonUyariKutusuIptal();
 
     }
 

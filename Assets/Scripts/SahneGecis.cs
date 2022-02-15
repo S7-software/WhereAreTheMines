@@ -23,6 +23,8 @@ public class SahneGecis : MonoBehaviour
     }
     public void Oyna()
     {
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
+
         canvasUyariKutusu.SetActive(true);
     }
 

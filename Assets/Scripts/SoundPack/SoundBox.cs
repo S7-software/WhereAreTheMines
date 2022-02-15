@@ -18,6 +18,7 @@ public class SoundBox : MonoBehaviour
         }
         instance = this;
         audioSource = GetComponent<AudioSource>();
+        SetVolume(KAYIT.GetSes());
     }
 
     public void PlayOneShot(NamesOfSound name)

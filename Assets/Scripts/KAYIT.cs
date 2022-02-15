@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KAYIT : MonoBehaviour
 {
-    static string ANAHTAR_REKOR_MAYIN_SAYISI = "";
+    static string ANAHTAR_REKOR_MAYIN_SAYISI = "RekorSureMayin";
     const string ANAHTAR_SECILI_MAYIN_SAYISI = "Selici Mayin Sayisi";
 
     const string KY_BUTTON_ANA_MENU_OYNA = "btnOyna";
@@ -393,34 +393,29 @@ public class KAYIT : MonoBehaviour
     {
         return PlayerPrefs.GetInt(ANAHTAR_SECILI_MAYIN_SAYISI);
     }
-    public static void SetRekor(int mayinSayisi, int sure)
+    public static void SetRekor(int bolum, int sure)
     {
-        ANAHTAR_REKOR_MAYIN_SAYISI = mayinSayisi.ToString();
-        if (PlayerPrefs.HasKey(ANAHTAR_REKOR_MAYIN_SAYISI))
+       string key= ANAHTAR_REKOR_MAYIN_SAYISI+ bolum.ToString();
+        if (PlayerPrefs.HasKey(key))
         {
-            if (PlayerPrefs.GetInt(ANAHTAR_REKOR_MAYIN_SAYISI) > sure)
+            if (PlayerPrefs.GetInt(key) > sure)
             {
-                PlayerPrefs.SetInt(ANAHTAR_REKOR_MAYIN_SAYISI, sure);
+                PlayerPrefs.SetInt(key, sure);
             }
         }
         else
         {
-            PlayerPrefs.SetInt(ANAHTAR_REKOR_MAYIN_SAYISI, sure);
+            PlayerPrefs.SetInt(key, sure);
 
         }
 
     }
-    public static int GetRekorSure(int mayinSayisi)
+    public static int GetRekorSure(int bolum)
     {
-        ANAHTAR_REKOR_MAYIN_SAYISI = mayinSayisi.ToString();
-        if (PlayerPrefs.HasKey(ANAHTAR_REKOR_MAYIN_SAYISI))
-        {
-            return PlayerPrefs.GetInt(ANAHTAR_REKOR_MAYIN_SAYISI);
-        }
-        else
-        {
-            return 10000;
-        }
+        string key = ANAHTAR_REKOR_MAYIN_SAYISI + bolum.ToString();
+        
+            return PlayerPrefs.GetInt(key,10000);
+        
 
         
     }
@@ -463,9 +458,12 @@ public class KAYIT : MonoBehaviour
             return updtSure;
         }
     }
-  
 
-    
+
+    public static int GetSonAcikBolum() { return PlayerPrefs.GetInt("sonacikBolu", 1); }
+    public static void SetSonAcikBolumArti(int acilanBolum) { PlayerPrefs.SetInt("sonacikBolu", GetSonAcikBolum()<acilanBolum?acilanBolum: GetSonAcikBolum()); }
+    public static int GetRekorYildiz(int bolum) { return PlayerPrefs.GetInt("rekoryildiz"+bolum, 0); }
+    public static void SetRekorYildiz(int bolum,int yildiz) { PlayerPrefs.SetInt("rekoryildiz" + bolum, yildiz); }
 
     public static void ButuKayitlariSil()
     {
