@@ -17,6 +17,7 @@ public class KAYIT : MonoBehaviour
     const string KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI = "txtUyariKutusu";
     const string KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA = "btnUyariKutusuBasla";
     const string KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL = "btnUyariKutusuIptal";
+    const string KY_BOLUMLAR = "KY_BOLUMLAR";
 
     const string KY_TEXT_AYARLAR = "txtAyarlar";
     const string KY_TEXT_AYARLAR_SES = "txtAyarlarSes";
@@ -65,6 +66,7 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "MAYIN");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "BAŞLA");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "İPTAL");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "BÖLÜMLER");
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "AYARLAR");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "SES");
@@ -93,6 +95,8 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "Мина");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "Начать");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "Отмена");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "РАЗДЕЛЫ");
+
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "Настройки");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "Звук");
@@ -123,6 +127,8 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "Mina");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "Empezar");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "Cancelación");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "SECCIONES");
+
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "Ajustes");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "Sonido");
@@ -153,6 +159,8 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "Mine");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "Démarrer");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "Annuler");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "SECTIONS");
+
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "Paramètres");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "Son");
@@ -185,6 +193,8 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "地雷");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "始める");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "キャンセル");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "セクション");
+
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "設定");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "音");
@@ -214,6 +224,8 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "Mine");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "Starten");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "Stornieren");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "ABSCHNITTE");
+
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "Einstellungen");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "Töne");
@@ -244,6 +256,8 @@ public class KAYIT : MonoBehaviour
                 PlayerPrefs.SetString(KY_TEXT_ANA_MENU_UYARI_KUTUSU_MAYIN_SAYISI, "Mines");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_BASLA, "Start");
                 PlayerPrefs.SetString(KY_BUTTON_ANA_MENU_UYARI_KUTUSU_IPTAL, "Cancel");
+                PlayerPrefs.SetString(KY_BOLUMLAR, "SECTIONS");
+
 
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR, "Options");
                 PlayerPrefs.SetString(KY_TEXT_AYARLAR_SES, "Volume");
@@ -292,6 +306,10 @@ public class KAYIT : MonoBehaviour
     public static string GetDilButtonAnaMenuCikis()
     {
         return PlayerPrefs.GetString(KY_BUTTON_ANA_MENU_CIKIS);
+    }
+    public static string GetBolumler()
+    {
+        return PlayerPrefs.GetString(KY_BOLUMLAR);
     }
     public static string GetDilTextUyariKutusuMayinSayisi()
     {

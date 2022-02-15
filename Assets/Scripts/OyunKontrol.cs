@@ -15,7 +15,7 @@ public class OyunKontrol : MonoBehaviour
     private int _rekorSure;
     public bool oyunBasladi = false;
     public GameObject panelSonuc;
-    public Button btnTekrar, btnBayrak;
+    public Button btnTekrar, btnBayrak,_btnAnaMenu,_btnSonraki,_btnAlanTara;
     public GameObject panel, btnBasla;
     public Text txtSure;
     public Text txtMayin, txtBayrak, txtRekor;
@@ -283,7 +283,8 @@ public class OyunKontrol : MonoBehaviour
     {
         ses.PlayKazanma();
         StopAllCoroutines();
-        KAYIT.SetRekorYildiz(_bolum, 2);
+        int yildizSayisi = 2;
+        KAYIT.SetRekorYildiz(_bolum, yildizSayisi);
         KAYIT.SetSonAcikBolumArti(_bolum+1);
        
 
@@ -299,6 +300,7 @@ public class OyunKontrol : MonoBehaviour
         sonuc.SetTxtMayin(_mayinSayisi.ToString());
         sonuc.SetTxtSure(txtSure.text);
         sonuc.SetTxtSonuc(KAYIT.GetDilTexttOyunOyunSonuKazandin());
+        sonuc.SetYildiz(yildizSayisi);
 
 
 
@@ -338,5 +340,6 @@ public class OyunKontrol : MonoBehaviour
         sonuc.SetTxtSonuc(KAYIT.GetDilTexttOyunOyunSonuKaybettin());
 
         sonuc.SetTxtMesaj(KAYIT.GetDilTexttOyunOyunSonuKaybettinMesaj());
+        sonuc.SetYildiz(0);
     }
 }

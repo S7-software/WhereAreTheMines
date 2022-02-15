@@ -11,10 +11,13 @@ public class ButtonLevel : MonoBehaviour
 
     [SerializeField] Image[] _yildizlar;
     Button _myBtn;
-    Color renk = new Color(255, 255, 255, 0.30f);
-    Color renkTxt = new Color(0, 0, 0, 0.30f);
-    Color renkOrj = new Color(255, 255, 255, 255);
-    Color renkOrjTxt = new Color(0, 0, 0, 255);
+    Color renkBeyazSeffaf = new Color(255, 255, 255, 0.12f);
+    Color renkBeyaz = new Color(255, 255, 255, 255);
+    Color renkSiyahSeffaf = new Color(0, 0, 0, 0.30f);
+    Color renkSiyaf = new Color(0, 0, 0, 255);
+
+    [SerializeField] Color renkKirmizi, renkMavi, renkYesil;
+
     private void Awake()
     {
         _myBtn = GetComponent<Button>();
@@ -30,8 +33,17 @@ public class ButtonLevel : MonoBehaviour
         _txtLevel.text = kacinciLevel.ToString();
         _txtSure.text = rekorSure;
 
-        _txtSure.color = aktif ? _txtSure.color : renkTxt;
-        _txtLevel.color = aktif ? renkOrjTxt : renkTxt;
+        switch (kacYildiz)
+        {
+            case 1: _txtSure.color = renkKirmizi; break;
+            case 2: _txtSure.color = renkMavi; break;
+            case 3: _txtSure.color = renkYesil; break;
+            default:
+                _txtSure.color =  renkSiyahSeffaf;
+                break;
+        }
+       
+        _txtLevel.color = aktif ? renkSiyaf : renkSiyahSeffaf;
         _myBtn.onClick.AddListener(()=>StartCoroutine(HandleBolumeGit(kacinciLevel)));
 
 
@@ -48,8 +60,8 @@ public class ButtonLevel : MonoBehaviour
 
     void KacYildiz(int sayi)
     {
-        _yildizlar[0].color = sayi >= 1 ? renkOrj : renk;
-        _yildizlar[1].color = sayi >= 2 ? renkOrj : renk;
-        _yildizlar[2].color = sayi >= 3 ? renkOrj : renk;
+        _yildizlar[0].color = sayi >= 1 ? renkBeyaz : renkBeyazSeffaf;
+        _yildizlar[1].color = sayi >= 2 ? renkBeyaz : renkBeyazSeffaf;
+        _yildizlar[2].color = sayi >= 3 ? renkBeyaz : renkBeyazSeffaf;
     }
 }

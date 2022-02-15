@@ -17,7 +17,7 @@ public class CanvaBolumSec : MonoBehaviour
         else _goUyariKutusu.transform.localScale = Vector3.one;
 
         _btnsLevel = _parentBolumler.GetComponentsInChildren<ButtonLevel>();
-        _txtHeader.text = "BÖLÜMLER";
+        _txtHeader.text = KAYIT.GetBolumler();
     }
 
     private void Start()
