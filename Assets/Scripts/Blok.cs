@@ -23,7 +23,7 @@ public class Blok : MonoBehaviour
     bool oyunBasladi = false;
     bool dogruBayrakVar = false;
     Surat surat;
-
+    public bool _haveAFlag = false;
     Ses ses;
 
 
@@ -168,7 +168,7 @@ public class Blok : MonoBehaviour
             oyunKontrol.ArttirHamleSayisi();
             if (img.sprite.name == "OynFlag")
             {
-
+                _haveAFlag = false;
                 img.sprite = sptKutular[0];
                 oyunKontrol.BayrakKaldir();
                 if (dogruBayrakVar)
@@ -182,6 +182,8 @@ public class Blok : MonoBehaviour
             else if (oyunKontrol.GetBayrakSayisi() > 0)
             {
                 img.sprite = sptKutular[10];
+                _haveAFlag = true; ;
+
                 if (isMayin)
                 {
                     oyunKontrol.SetDogruBayrakSayisi("+");

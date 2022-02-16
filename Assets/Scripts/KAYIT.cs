@@ -431,8 +431,8 @@ public class KAYIT : MonoBehaviour
     public static int GetRekorSure(int bolum)
     {
         string key = ANAHTAR_REKOR_MAYIN_SAYISI + bolum.ToString();
-        
-            return PlayerPrefs.GetInt(key,10000);
+
+        return PlayerPrefs.GetInt(key,10000);
         
 
         
@@ -489,5 +489,5 @@ public class KAYIT : MonoBehaviour
     }
 
     public static void SetSayfaKonum(float transformY) { PlayerPrefs.SetFloat("konumsayfa", transformY); }
-    public static float GetSayfaKonum() { return PlayerPrefs.GetFloat("konumsayfa", -4800); }
+    public static float GetSayfaKonum() { return PlayerPrefs.GetFloat("konumsayfa", -4800)<-4800?-4800: PlayerPrefs.GetFloat("konumsayfa", -4800); }
 }

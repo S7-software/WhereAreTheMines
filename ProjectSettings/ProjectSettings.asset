@@ -246,7 +246,7 @@ PlayerSettings:
   AndroidTargetDevices: 0
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: C:/Users/sinan73k1n/Documents/GooglePlayYayimlala/WhereAreTheMines/user.keystore
+  AndroidKeystoreName: /Users/sinan73k1n/MEGAsync/Projeler/_GooglePlayYayimlala/WhereAreTheMines/user.keystore
   AndroidKeyaliasName: wherearethemines
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0

@@ -56,7 +56,7 @@ public class OyunKontrol : MonoBehaviour
 
     void SayfaPause(bool acik)
     {
-        
+
         _btnAnaMenu.gameObject.SetActive(acik);
         _btnTekrar.gameObject.SetActive(acik);
         _btnSonraki.gameObject.SetActive(acik);
@@ -79,14 +79,26 @@ public class OyunKontrol : MonoBehaviour
         _btnPause.onClick.AddListener(() => HandlePause());
         _btnSonraki.onClick.AddListener(() => StartCoroutine(HandleSonraki()));
         _btnDevam.onClick.AddListener(() => HandleDevam());
+        _btnAnaMenu.onClick.AddListener(() => StartCoroutine(HandleAnaMenu()));
 
+    }
+
+    IEnumerator HandleAnaMenu()
+    {
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
+
+        yield return new WaitForSeconds(0.2f);
+        AdControl.instance.CloseBanner();
+        SceneManager.LoadScene("Ana Menu");
     }
 
     private void HandleDevam()
     {
+        AdControl.instance.CloseBanner();
         SoundBox.instance.PlayOneShot(NamesOfSound.clickArama);
         SayfaPause(false);
         _canvasDuraklatildi.SetActive(false);
+        isPause = false;
     }
 
     IEnumerator HandleSonraki()
@@ -99,6 +111,9 @@ public class OyunKontrol : MonoBehaviour
 
     private void HandlePause()
     {
+        isPause = true;
+        SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
+        AdControl.instance.ShowBanner();
         _canvasDuraklatildi.SetActive(true);
         SayfaPause(true);
     }
@@ -106,16 +121,13 @@ public class OyunKontrol : MonoBehaviour
     private void Esite()
     {
         _mayinSayisi = KAYIT.GetMayinSayisi();
-        if (KAYIT.GetRekorSure(_bolum) != 10000)
-        {
-            int updtSure = KAYIT.GetRekorSure(_bolum);
-            txtRekor.text = KAYIT.GetDilTexttOyunRekor() + KAYIT.SureyiYaz(updtSure);
-        }
-        else
-        {
-            txtRekor.text = KAYIT.GetDilTexttOyunRekor() + " --:--";
-        }
 
+        if (KAYIT.GetRekorSure(_mayinSayisi-9) == 10000 || KAYIT.GetRekorSure(_mayinSayisi - 9) == 1000)
+            txtRekor.text = KAYIT.GetDilTexttOyunRekor() + " --:--";
+        else
+
+            txtRekor.text = KAYIT.GetDilTexttOyunRekor() + (KAYIT.SureyiYaz(KAYIT.GetRekorSure(_mayinSayisi - 9)));
+       
     }
 
     IEnumerator SureyiCalistir()
@@ -163,14 +175,20 @@ public class OyunKontrol : MonoBehaviour
         int random = Random.Range(0, bloklar.Length);
 
         int bulunacak = 0;
-        while (!yapildi && bulunacak<9)
+        while (!yapildi && bulunacak < 9)
         {
 
             for (int i = random; i < bloklar.Length; i++)
             {
-                if (bloklar[i].yanimdaKacMayinVar == bulunacak && !bloklar[i].isMayin && bloklar[i].myCollider2D.enabled)
+                if (bloklar[i].yanimdaKacMayinVar == bulunacak && !bloklar[i].isMayin && (bloklar[i].myCollider2D.enabled || bloklar[i]._haveAFlag))
                 {
+                    if (bloklar[i]._haveAFlag)
+                    {
+                        bayrakAktif = true;
+                        bloklar[i].AlanKontrol();
+                        bayrakAktif = false;
 
+                    }
                     bloklar[i].AlanKontrol();
                     yapildi = true;
                     break;
@@ -178,10 +196,17 @@ public class OyunKontrol : MonoBehaviour
             }
             if (!yapildi)
             {
-                for (int i = random-1; i >= 0; i--)
+                for (int i = random - 1; i >= 0; i--)
                 {
-                    if (bloklar[i].yanimdaKacMayinVar == bulunacak && !bloklar[i].isMayin && bloklar[i].myCollider2D.enabled)
+                    if (bloklar[i].yanimdaKacMayinVar == bulunacak && !bloklar[i].isMayin && (bloklar[i].myCollider2D.enabled || bloklar[i]._haveAFlag))
                     {
+                        if (bloklar[i]._haveAFlag)
+                        {
+                            bayrakAktif = true;
+                            bloklar[i].AlanKontrol();
+                            bayrakAktif = false;
+
+                        }
                         bloklar[i].AlanKontrol();
                         yapildi = true;
                         break;
@@ -277,6 +302,7 @@ public class OyunKontrol : MonoBehaviour
 
     public void BaslaButton()
     {
+        AdControl.instance.CloseBanner();
         isPause = false;
         panel.SetActive(false);
         _btnBayrak.interactable = true;
@@ -304,7 +330,7 @@ public class OyunKontrol : MonoBehaviour
         if (!bayrakAktif)
         {
             bayrakAktif = true;
-
+            _btnAlanTara.interactable = false;
 
             newColorBlock.normalColor = newColor[0];
             newColorBlock.pressedColor = newColor[0];
@@ -315,6 +341,8 @@ public class OyunKontrol : MonoBehaviour
         else
         {
             bayrakAktif = false;
+            _btnAlanTara.interactable = true;
+
             newColorBlock.normalColor = newColor[1];
             newColorBlock.pressedColor = newColor[1];
             newColorBlock.selectedColor = newColor[1];
@@ -353,10 +381,6 @@ public class OyunKontrol : MonoBehaviour
     {
         if (_bayrakSayisi < 10)
         {
-            txtBayrak.text = "00" + _bayrakSayisi;
-        }
-        else if (_bayrakSayisi < 100)
-        {
             txtBayrak.text = "0" + _bayrakSayisi;
         }
         else
@@ -367,12 +391,13 @@ public class OyunKontrol : MonoBehaviour
 
     public void Kazandin()
     {
+        AdControl.instance.ShowBanner();
         ses.PlayKazanma();
         SayfaPause(true);
         _btnSonraki.interactable = true;
 
         StopAllCoroutines();
-        int yildizSayisi = _countOfArama<2?1:_countOfArama;
+        int yildizSayisi = _countOfArama < 2 ? 1 : _countOfArama;
         KAYIT.SetRekorYildiz(_bolum, yildizSayisi);
         KAYIT.SetSonAcikBolumArti(_bolum + 1);
 
@@ -413,6 +438,8 @@ public class OyunKontrol : MonoBehaviour
 
     public void Kaybettin()
     {
+        AdControl.instance.ShowBanner();
+
         ses.PlayPatlama();
         SayfaPause(true);
         _btnSonraki.interactable = false;

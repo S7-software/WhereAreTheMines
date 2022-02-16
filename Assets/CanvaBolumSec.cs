@@ -10,6 +10,8 @@ public class CanvaBolumSec : MonoBehaviour
     [SerializeField] Text _txtHeader;
     [SerializeField] GameObject _parentBolumler,_goUyariKutusu,_goSayfaKonum;
     ButtonLevel[] _btnsLevel;
+
+    float geriSayim = 1;
     private void Awake()
     {
         double a = Convert.ToDouble(Screen.height) / Convert.ToDouble(Screen.width);
@@ -19,7 +21,9 @@ public class CanvaBolumSec : MonoBehaviour
         _btnsLevel = _parentBolumler.GetComponentsInChildren<ButtonLevel>();
         _txtHeader.text = KAYIT.GetBolumler();
         _goSayfaKonum.transform.localPosition = new Vector3(0, KAYIT.GetSayfaKonum(), 0);
+
     }
+  
 
     private void Start()
     {
@@ -29,11 +33,12 @@ public class CanvaBolumSec : MonoBehaviour
 
     private void HandleIptal()
     {
+        AdControl.instance.CloseBanner();
         SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
         SetSayfaKonum();
         gameObject.SetActive(false);
     }
-    public void SetSayfaKonum() { KAYIT.SetSayfaKonum(_goSayfaKonum.transform.position.y); }
+    public void SetSayfaKonum() { KAYIT.SetSayfaKonum(_goSayfaKonum.transform.localPosition.y); }
     void AtaButtonlaraDeger(ButtonLevel[] buttonLevel)
     {
         for (int i = 0; i < buttonLevel.Length; i++)
