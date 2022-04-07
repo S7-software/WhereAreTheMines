@@ -29,23 +29,30 @@ public class AdControl : MonoBehaviour, IUnityAdsInitializationListener, IUnityA
     }
     void Start()
     {
+        if (!KAYIT.GetReklamVar()) return;
         Advertisement.Initialize(gameId, testMode);
 
 
     }
     public void ShowRewardedVideoMayinAra()
     {
-
+        if (!KAYIT.GetReklamVar())
+        {
+            OyunKontrol.instance.HandleAds();
+            return;
+        }
         Advertisement.Show(placementIdOdul, instance);
     }
 
     public void ShowBanner()
     {
-       StartCoroutine(ShowBannerWhenReady());
+        if (!KAYIT.GetReklamVar()) return;
+        StartCoroutine(ShowBannerWhenReady());
     }
 
     public void CloseBanner()
     {
+        if (!KAYIT.GetReklamVar()) return;
         Advertisement.Banner.Hide();
     }
 

@@ -173,8 +173,8 @@ public class OyunKontrol : MonoBehaviour
     {
         switch (aramaSayisi)
         {
-            case 3: _txtBtnAds.text = "1"; break;
-            case 2: _txtBtnAds.text = "+1\n (ADS)"; break;
+            case 3: _txtBtnAds.text =(KAYIT.GetReklamVar())? "1":"2"; break;
+            case 2: _txtBtnAds.text = KAYIT.GetReklamVar()?"+1\n (ADS)":"1"; break;
             default:
                 _txtBtnAds.text = "0";
                 break;

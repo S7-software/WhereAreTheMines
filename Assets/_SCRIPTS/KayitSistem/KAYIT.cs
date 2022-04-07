@@ -34,11 +34,11 @@ public class KAYIT : MonoBehaviour
     const string KY_TEXT_OYUN_OYUN_SONU_MAYIN = "txtOyunOyunSonuMayin";
     const string KY_TEXT_OYUN_OYUN_SONU_SURE = "txtOyunOyunSonuSure";
     const string KY_TEXT_OYUN_OYUN_SONU_HAMLE = "txtOyunOyunSonuHamle";
-    const string KY_TEXT_OYUN_OYUN_SONU_KAZANDIN_REKOR= "txtOyunOyunSonuKazandinRekor";
-    const string KY_TEXT_OYUN_OYUN_SONU_KAZANDIN_NORMAL= "txtOyunOyunSonuKazandinNormal";
+    const string KY_TEXT_OYUN_OYUN_SONU_KAZANDIN_REKOR = "txtOyunOyunSonuKazandinRekor";
+    const string KY_TEXT_OYUN_OYUN_SONU_KAZANDIN_NORMAL = "txtOyunOyunSonuKazandinNormal";
     const string KY_TEXT_OYUN_OYUN_SONU_KAYBETTIN_MESAJ = "txtOyunOyunSonuKaybettinMesaj";
 
-
+    const string KY_REKLAM = "reklam";
 
 
 
@@ -51,6 +51,9 @@ public class KAYIT : MonoBehaviour
 
     const float MIN_VOLUME = 0f;
     const float MAX_VOLUME = 1f;
+
+    public static bool GetReklamVar() { return PlayerPrefs.GetInt(KY_REKLAM, 1) == 0 ? false : true; }
+    public static void SetReklamVar(bool deger) { PlayerPrefs.SetInt(KY_REKLAM, (deger) ? 1 : 0); }
 
     public static void SetDil(string hangiDil)
     {
@@ -294,11 +297,12 @@ public class KAYIT : MonoBehaviour
     public static string GetSistemDili()
     {
         return PlayerPrefs.GetString(KY_DIL);
-    }public static string GetDilButtonAnaMenuOyna()
+    }
+    public static string GetDilButtonAnaMenuOyna()
     {
         return PlayerPrefs.GetString(KY_BUTTON_ANA_MENU_OYNA);
     }
-    
+
     public static string GetDilButtonAnaMenuAyarlar()
     {
         return PlayerPrefs.GetString(KY_BUTTON_ANA_MENU_AYARLAR);
@@ -331,42 +335,42 @@ public class KAYIT : MonoBehaviour
     {
         return PlayerPrefs.GetString(KY_TEXT_AYARLAR_SES);
     }
-    
+
     public static string GetDilTextAyarlarDil()
     {
         return PlayerPrefs.GetString(KY_TEXT_AYARLAR_DIL);
     }
-    
+
     public static string GetDilTextAyarlarRekorlariSifirla()
     {
         return PlayerPrefs.GetString(KY_TEXT_AYARLAR_REKORLARI_SIFIRLA);
     }
-    
+
     public static string GetDilButtontAyarlarSifirla()
     {
         return PlayerPrefs.GetString(KY_BUTTON_AYARLAR_SIFIRLA);
     }
-    
+
     public static string GetDilButtontAyarlarHakkimizda()
     {
         return PlayerPrefs.GetString(KY_BUTTON_AYARLAR_HAKKIMIZDA);
     }
-    
+
     public static string GetDilButtontAyarlarAnaMenu()
     {
         return PlayerPrefs.GetString(KY_BUTTON_AYARLAR_ANA_MENU);
     }
-    
+
     public static string GetDilButtontOyunBasla()
     {
         return PlayerPrefs.GetString(KY_BUTTON_OYUN_BASLA);
     }
-    
+
     public static string GetDilTexttOyunRekor()
     {
         return PlayerPrefs.GetString(KY_TEXT_OYUN_REKOR);
     }
-    
+
     public static string GetDilTexttOyunOyunSonuKazandin()
     {
         return PlayerPrefs.GetString(KY_TEXT_OYUN_OYUN_SONU_KAZANDIN);
@@ -413,7 +417,7 @@ public class KAYIT : MonoBehaviour
     }
     public static void SetRekor(int bolum, int sure)
     {
-       string key= ANAHTAR_REKOR_MAYIN_SAYISI+ bolum.ToString();
+        string key = ANAHTAR_REKOR_MAYIN_SAYISI + bolum.ToString();
         if (PlayerPrefs.HasKey(key))
         {
             if (PlayerPrefs.GetInt(key) > sure)
@@ -432,10 +436,10 @@ public class KAYIT : MonoBehaviour
     {
         string key = ANAHTAR_REKOR_MAYIN_SAYISI + bolum.ToString();
 
-        return PlayerPrefs.GetInt(key,10000);
-        
+        return PlayerPrefs.GetInt(key, 10000);
 
-        
+
+
     }
 
     public static string SureyiYaz(int sure)
@@ -479,9 +483,14 @@ public class KAYIT : MonoBehaviour
 
 
     public static int GetSonAcikBolum() { return PlayerPrefs.GetInt("sonacikBolu", 1); }
-    public static void SetSonAcikBolumArti(int acilanBolum) { PlayerPrefs.SetInt("sonacikBolu", GetSonAcikBolum()<acilanBolum?acilanBolum: GetSonAcikBolum()); }
-    public static int GetRekorYildiz(int bolum) { return PlayerPrefs.GetInt("rekoryildiz"+bolum, 0); }
-    public static void SetRekorYildiz(int bolum,int yildiz) { PlayerPrefs.SetInt("rekoryildiz" + bolum, yildiz); }
+    public static void SetSonAcikBolumArti(int acilanBolum) { PlayerPrefs.SetInt("sonacikBolu", GetSonAcikBolum() < acilanBolum ? acilanBolum : GetSonAcikBolum()); }
+    public static int GetRekorYildiz(int bolum) { return PlayerPrefs.GetInt("rekoryildiz" + bolum, 0); }
+    public static void SetRekorYildiz(int bolum, int yildiz)
+    {
+        string key = "rekoryildiz" + bolum;
+        int tempYildiz = PlayerPrefs.GetInt(key);
+        PlayerPrefs.SetInt(key, yildiz>tempYildiz?yildiz:tempYildiz);
+    }
 
     public static void ButuKayitlariSil()
     {
@@ -489,5 +498,5 @@ public class KAYIT : MonoBehaviour
     }
 
     public static void SetSayfaKonum(float transformY) { PlayerPrefs.SetFloat("konumsayfa", transformY); }
-    public static float GetSayfaKonum() { return PlayerPrefs.GetFloat("konumsayfa", -4800)<-4800?-4800: PlayerPrefs.GetFloat("konumsayfa", -4800); }
+    public static float GetSayfaKonum() { return PlayerPrefs.GetFloat("konumsayfa", -4800) < -4800 ? -4800 : PlayerPrefs.GetFloat("konumsayfa", -4800); }
 }

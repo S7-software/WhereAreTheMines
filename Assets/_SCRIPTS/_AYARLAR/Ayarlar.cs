@@ -137,7 +137,9 @@ public class Ayarlar : MonoBehaviour
     public void ButunKayitleriSil()
     {
         SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
+        bool tempReklam = KAYIT.GetReklamVar();
         KAYIT.ButuKayitlariSil();
+      //  KAYIT.SetReklamVar(tempReklam);
         StartCoroutine(SahneDegistir(0.5f, "Intro"));
     }
 
