@@ -24,7 +24,6 @@ public class SahneGecis : MonoBehaviour
     public void Oyna()
     {
         SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
-        AdControl.instance.ShowBanner();
         canvasUyariKutusu.SetActive(true);
     }
 

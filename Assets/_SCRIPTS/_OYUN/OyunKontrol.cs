@@ -91,14 +91,12 @@ public class OyunKontrol : MonoBehaviour
         SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
 
         yield return new WaitForSeconds(0.2f);
-        AdControl.instance.CloseBanner();
         SceneManager.LoadScene("Ana Menu");
     }
 
     private void HandleDevam()
     {
         Clock.instance._durakla = false;
-        AdControl.instance.CloseBanner();
         SoundBox.instance.PlayOneShot(NamesOfSound.clickArama);
         SayfaPause(false);
         _canvasDuraklatildi.SetActive(false);
@@ -117,7 +115,6 @@ public class OyunKontrol : MonoBehaviour
     {
         isPause = true;
         SoundBox.instance.PlayOneShot(NamesOfSound.clickGiris);
-        AdControl.instance.ShowBanner();
         _canvasDuraklatildi.SetActive(true);
         SayfaPause(true);
     }
@@ -192,7 +189,6 @@ public class OyunKontrol : MonoBehaviour
                 ChangeTextOfAds(_countOfArama);
                 break;
             case 2:
-                AdControl.instance.ShowRewardedVideoMayinAra();
                 Clock.instance._durakla = true;
                 break;
 
@@ -346,7 +342,6 @@ public class OyunKontrol : MonoBehaviour
 
     public void BaslaButton()
     {
-        AdControl.instance.CloseBanner();
         isPause = false;
         panel.SetActive(false);
         _btnBayrak.interactable = true;
@@ -437,7 +432,6 @@ public class OyunKontrol : MonoBehaviour
 
     public void Kazandin()
     {
-        AdControl.instance.ShowBanner();
         ses.PlayKazanma();
         SayfaPause(true);
         _btnSonraki.interactable = true;
@@ -484,7 +478,6 @@ public class OyunKontrol : MonoBehaviour
 
     public void Kaybettin()
     {
-        AdControl.instance.ShowBanner();
         Clock.instance._durakla = true;
         ses.PlayPatlama();
         SayfaPause(true);

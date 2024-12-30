@@ -32,7 +32,6 @@ public class CanvaBolumSec : MonoBehaviour
 
     private void HandleIptal()
     {
-        AdControl.instance.CloseBanner();
         SoundBox.instance.PlayOneShot(NamesOfSound.clickCikis);
         SetSayfaKonum();
         gameObject.SetActive(false);
